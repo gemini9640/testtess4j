@@ -1,0 +1,57 @@
+此方案需要依赖于 Tess4J
+
+mac版
+1.本地安装软件
+Install Homebrew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+brew install tesseract
+
+
+2.maven工程
+pom.xml中导入testng、tess4j、jna
+<dependencies>
+    <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+    <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>6.11</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
+    <dependency>
+        <groupId>net.sourceforge.tess4j</groupId>
+        <artifactId>tess4j</artifactId>
+        <version>3.4.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
+    <dependency>
+        <groupId>net.java.dev.jna</groupId>
+        <artifactId>jna</artifactId>
+        <version>4.4.0</version>
+    </dependency>
+</dependencies>
+
+http://tess4j.sourceforge.net/usage.html 下载Tess4J， 将tessdata目录拷贝到项目根目录下
+
+3.测试代码
+public class Test {
+
+    public static void testCode() {
+        File imageFile = new File("/Users/GW/Desktop/yzm.jpg");
+        ITesseract tesseract = new Tesseract();
+        try {
+            String result = tesseract.doOCR(imageFile);
+            System.out.println(result);
+        } catch (TesseractException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        testCode();
+    }
+}
+
+参考链接：
+https://www.jianshu.com/p/bfa05fac0998
